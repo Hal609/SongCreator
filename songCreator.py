@@ -25,6 +25,9 @@ def addMelody(note_list):
 
     return audio
 
+def addChord(key, progression):
+    pass
+
 def notesToPitchShift(note):
     # Find number of steps relative to C3
     dif =  Note(note).get_key_number() - Note("C3").get_key_number()
@@ -72,7 +75,7 @@ tracks = [
     [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
 ]
 
-totalLength = 20
+totalLength = 30
 fullBeat = addTrack(list(np.zeros(totalLength)))
 
 file = open("melody_output.csv", "r")
