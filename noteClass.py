@@ -14,6 +14,12 @@ class Note:
         newNote.set_key_number(newNum)
         return newNote
     
+    def __sub__(self, other):
+        newNum = self.get_key_number() - other
+        newNote = Note("A4")
+        newNote.set_key_number(newNum)
+        return newNote
+    
     def set_key_number(self, new_key_number):
         global reverseKeyNumDict
         octave = (new_key_number + 8) // 12
