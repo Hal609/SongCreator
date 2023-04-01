@@ -37,15 +37,16 @@ def randomKey():
     key = rand.randint(2, 5)
     return keyDict[key]
 
-root = randomKey() + str(rand.randint(0, 6))
-key = Note(root)
-notesList = createNotesList(key, bluesKeyIntervals)
-melody = createMelody(notesList)
+def generateMelody():
+    root = randomKey() + str(rand.randint(0, 6))
+    key = Note(root)
+    notesList = createNotesList(key, bluesKeyIntervals)
+    melody = createMelody(notesList)
 
-outputData = ""
-for note in melody:
-    outputData += str(note) + ","
+    outputData = ""
+    for note in melody:
+        outputData += str(note) + ","
 
-outputFile = open("melody_output.csv", "w")
-outputFile.write(outputData[:-1])
-outputFile.close()
+    outputFile = open("melody_output.csv", "w")
+    outputFile.write(outputData[:-1])
+    outputFile.close()
