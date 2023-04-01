@@ -20,6 +20,21 @@ def createNotesList(key, scale):
             lowKey += scale[j]
     return notesList
 
+def createMelody(notesList):
+    melody = []
+    melodyLength = rand.randint(8, 24)
+    melodyLength -= melodyLength % 4
+    currentNote = 7
+    for i in range(melodyLength):
+        melody.append(notesList[currentNote])
+        noteChange = np.random.normal(0, 3, 1)      # 1 point with mean 0 and sd 1
+        noteChange = int(noteChange)
+        currentNote += noteChange
+    
+    for note in melody:
+        print(note)
+    
+
 keyDict = {0: "A", 1: "A#", 2: "B", 3: "C", 4: "C#", 5: "D", 6: "D#", 7: "E", 8: "F", 9: "F#", 10: "G", 11: "G#"}
 def randomKey():
     key = rand.randint(0, 11)
@@ -27,6 +42,5 @@ def randomKey():
 
 root = randomKey() + str(rand.randint(0, 6))
 key = Note(root)
-key = Note("C4")
-notesList = createNotesList(key, majorKeyIntervals)
-# createMelody(notesList)
+notesList = createNotesList(key, bluesKeyIntervals)
+createMelody(notesList)
