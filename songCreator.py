@@ -1,18 +1,14 @@
 from pydub import AudioSegment
 import numpy as np
+from noteClass import Note
 import librosa
 
 def pitch_shift(sound, n_half_steps):
     octaves = n_half_steps / 12
-
     new_sample_rate = int(sound.frame_rate * (2.0 ** octaves))
+    newpitch_sound = sound._spawn(sound.raw_data, overrides={'frame_rate': new_sample_rate})
 
-    lowpitch_sound = sound._spawn(sound.raw_data, overrides={'frame_rate': new_sample_rate})
-
-    # y = np.frombuffer(sound._data, dtype=np.int16).astype(np.float32)/2**15
-    # y = librosa.effects.pitch_shift(y, sound.frame_rate, n_steps=n_steps)
-    # a  = AudioSegment(np.array(y * (1<<15), dtype=np.int16).tobytes(), frame_rate = sound.frame_rate, sample_width=2, channels = 1)
-    return lowpitch_sound
+    return newpitch_sound
 
 def addMelody(note_list):
     # Create an empty AudioSegment to hold the beat
@@ -21,14 +17,19 @@ def addMelody(note_list):
     # Create the beat based on the beat list
     for i in range(len(note_list)):
         # beat_type = beat_list[i]
-        if i < 4:
-            hit = lead
-        else:
-            hit = pitch_shift(lead, 4)
+        shift = notesToPitchShift(note_list[i])
+        hit = pitch_shift(lead, shift)
         audio += silence
         audio = audio.overlay(hit, position=len(audio)-len(silence))
 
     return audio
+
+def notesToPitchShift(note):
+    # Find number of steps relative to C3
+    dif =  Note(note).get_key_number() - Note("C3").get_key_number()
+    print(dif)
+    return dif
+
 
 def addTrack(beat_list):
     # Define a dictionary mapping each beat type to its corresponding sample
@@ -72,9 +73,11 @@ tracks = [
 
 fullBeat = addTrack(list(np.zeros(len(tracks[0]))))
 
-noteTrack = list(np.zeros(len(tracks[0])))
-for i in range(len(noteTrack)):
-    noteTrack[i] = "A4"
+noteTrack = []
+for i in range(len(fullBeat)):
+    noteTrack.append("")
+
+noteTrack = ['C3', 'D3', 'E3', 'E3', 'G3', 'G3', 'G3', 'G3', 'E3', 'E3', 'E3', 'E3', 'C3', 'C3', 'E3', 'C3']
 fullBeat = fullBeat.overlay(addMelody(noteTrack))
 
 for beat in tracks:
