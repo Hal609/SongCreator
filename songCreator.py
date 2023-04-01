@@ -1,7 +1,7 @@
 from pydub import AudioSegment
 import numpy as np
 from noteClass import Note
-import librosa
+import csv
 
 def pitch_shift(sound, n_half_steps):
     octaves = n_half_steps / 12
@@ -27,7 +27,6 @@ def addMelody(note_list):
 def notesToPitchShift(note):
     # Find number of steps relative to C3
     dif =  Note(note).get_key_number() - Note("C3").get_key_number()
-    print(dif)
     return dif
 
 
@@ -73,12 +72,14 @@ tracks = [
 
 fullBeat = addTrack(list(np.zeros(len(tracks[0]))))
 
-noteTrack = []
-for i in range(len(fullBeat)):
-    noteTrack.append("")
+file = open("melody_output.csv", "r")
+notesFromFile = list(csv.reader(file, delimiter=","))[0]
+file.close()
 
-noteTrack = ['C3', 'D3', 'E3', 'E3', 'G3', 'G3', 'G3', 'G3', 'E3', 'E3', 'E3', 'E3', 'C3', 'C3', 'E3', 'C3']
-fullBeat = fullBeat.overlay(addMelody(noteTrack))
+for i in range(len(tracks[0]) - len(notesFromFile)):
+    notesFromFile.append(notesFromFile[0])
+
+fullBeat = fullBeat.overlay(addMelody(notesFromFile))
 
 for beat in tracks:
     fullBeat = fullBeat.overlay(addTrack(beat))
