@@ -17,7 +17,6 @@ def addMelody(note_list):
 
     # Create the beat based on the beat list
     for i in range(len(note_list)):
-        # beat_type = beat_list[i]
         shift = notesToPitchShift(note_list[i])
         hit = pitch_shift(lead, shift)
         audio += silence
@@ -71,8 +70,8 @@ silence = AudioSegment.silent(duration=len(silence))
 
 
 tracks = [
-    [1, 0, 2, 2, 0, 0, 2, 0, 1, 0, 2, 2, 0, 0, 2, 0],
-    [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+    [1, 0, 2, 2, 0, 0, 2, 0, 1, 0, 2, 2, 0, 0, 2, 0, 1, 0, 2, 2, 0, 0, 2, 0],
+    [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
 ]
 
 totalLength = 30
@@ -87,7 +86,7 @@ for i in range(totalLength):
     nextNote = notesFromFile[i % len(notesFromFile)]
     fullNotes.append(nextNote)
 
-fullBeat = fullBeat.overlay(addMelody(notesFromFile))
+fullBeat = fullBeat.overlay(addMelody(fullNotes))
 
 for beat in tracks:
     fullBeat = fullBeat.overlay(addTrack(beat))
