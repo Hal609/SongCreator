@@ -22,7 +22,12 @@ def getChords(key, scale):
         if progression[i].islower():
             chordString = str(chords[-1])
             chords[-1] = f"{chordString[:-1]}m{chordString[-1]}"
-    print(progression)
-    for note in chords:
-        print(note)
     return chords
+<<<<<<< HEAD
+=======
+    # for note in chords:
+    #     print(note)
+
+key = Note("E3")
+getChords(key, bluesKeyIntervals)
+>>>>>>> parent of cf9a83e (Remove need for reading and writing to file)
