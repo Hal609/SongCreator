@@ -4,6 +4,7 @@ from noteClass import Note
 import generateMelody as grtMel
 import random as rand
 import createChordProgression as chords
+import createDrumTracks as drums
 from globals import *
 import csv
 
@@ -52,9 +53,9 @@ def addTrack(beat_list):
 
     return beat
 
-scaleDict = {0: majorKeyIntervals, 1: minorKeyIntervals, 2: bluesKeyIntervals}
-root = grtMel.randomKey() + str(rand.randint(2, 4))
+root = grtMel.randomKey() 
 key = Note(root)
+scaleDict = {0: majorKeyIntervals, 1: minorKeyIntervals, 2: bluesKeyIntervals}
 scaleChoice = scaleDict[rand.randint(0, 2)]
 melodyNotes = grtMel.generateMelody(key, scaleChoice)
 chords.getChords(key, scaleChoice)
@@ -72,15 +73,21 @@ kick = AudioSegment.from_file(samplePath + "Kick_1_808Flex.aif")
 snare = AudioSegment.from_file(samplePath + "Snare_1_808Flex.aif")
 hihat = AudioSegment.from_file(samplePath + "Hi-Hat_808Flex.aif")
 ride = AudioSegment.from_file(samplePath + "Ride_808Flex.aif")
-leadPath =  "/Library/Application Support/Logic/Alchemy Samples/Keys/Electric Pianos/EPiano FM Classic/"
-lead = AudioSegment.from_file(leadPath + "EPiano FM Classic C3.wav")
+# leadPath =  "/Library/Application Support/Logic/Alchemy Samples/Keys/Electric Pianos/EPiano FM Classic/"
+# lead = AudioSegment.from_file(leadPath + "EPiano FM Classic C3.wav")
+leadPath =  "/Library/Application Support/Logic/Alchemy Samples/Keys/Electric Pianos/Synth Tines/"
+lead = AudioSegment.from_file(leadPath + "Synth Tines 03.wav")
 silence = AudioSegment.silent(duration=len(silence))
 
 
 tracks = [
-    [1, 0, 2, 2, 0, 0, 2, 0, 1, 0, 2, 2, 0, 0, 2, 0, 1, 0, 2, 2, 0, 0, 2, 0],
-    [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0]
+    #[1, 0, 2, 2, 0, 0, 2, 0, 1, 0, 2, 2, 0, 0, 2, 0, 1, 0, 2, 2, 0, 0, 2, 0]
+    #[3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
 ]
+tracks = [list(np.zeros(8*6))]
+
+tracks += drums.createTrack(len(tracks[0]))
 
 totalLength = 30
 fullBeat = addTrack(list(np.zeros(totalLength)))

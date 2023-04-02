@@ -15,8 +15,8 @@ def pickProgression():
 def getChords(key, scale):
     progression = pickProgression()
     progression = progression.split("-")
-    chords = [key]
-    for i in range(1, len(progression)):
+    chords = []
+    for i in range(0, len(progression)):
         keyInterval = sum(scale[:numeralDict[progression[i]] - 1])
         chords.append(key + keyInterval)
         if progression[i].islower():
@@ -26,6 +26,3 @@ def getChords(key, scale):
     for note in chords:
         print(note)
     return chords
-
-key = Note("C3")
-getChords(key, majorKeyIntervals)
