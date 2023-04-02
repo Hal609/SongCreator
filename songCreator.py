@@ -98,10 +98,10 @@ for i in range(totalLength):
     nextNote = melodyNotes[i % len(melodyNotes)]
     fullNotes.append(nextNote)
 
-fullBeat = fullBeat.overlay(addMelody(fullNotes))
+# fullBeat = fullBeat.overlay(addMelody(fullNotes))
 
 for beat in tracks:
     fullBeat = fullBeat.overlay(addTrack(beat))
 
 # Export the final AudioSegment as a .mp3 file
-fullBeat.export("/Users/hal/Documents/PythonScripts/SongCreator/output.mp3", format="mp3")
+fullBeat.export("output.mp3", format="mp3")
