@@ -42,19 +42,14 @@ def randomKey():
     key = rand.randint(0, 11)
     return keyDict[key]
 
-scaleDict = {0: majorKeyIntervals, 1: minorKeyIntervals, 2: bluesKeyIntervals}
-def generateMelody():
-    root = randomKey() + str(rand.randint(2, 4))
-    key = Note(root)
-    scaleChoice = rand.randint(0, 2)
-    melody = createMelody(key, scaleDict[scaleChoice])
 
-    outputData = ""
+def generateMelody(key, scale):
+    melody = createMelody(key, scale)
+    outputData = []
     for note in melody:
-        outputData += str(note) + ","
+        outputData.append(str(note))
+    return outputData
 
     outputFile = open("melody_output.csv", "w")
     outputFile.write(outputData[:-1])
     outputFile.close()
-
-generateMelody()

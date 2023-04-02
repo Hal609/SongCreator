@@ -2,6 +2,9 @@ from pydub import AudioSegment
 import numpy as np
 from noteClass import Note
 import generateMelody as grtMel
+import random as rand
+import createChordProgression as chords
+from globals import *
 import csv
 
 def pitch_shift(sound, n_half_steps):
@@ -49,9 +52,14 @@ def addTrack(beat_list):
 
     return beat
 
-grtMel.generateMelody()
+scaleDict = {0: majorKeyIntervals, 1: minorKeyIntervals, 2: bluesKeyIntervals}
+root = grtMel.randomKey() + str(rand.randint(2, 4))
+key = Note(root)
+scaleChoice = scaleDict[rand.randint(0, 2)]
+melodyNotes = grtMel.generateMelody(key, scaleChoice)
+chords.getChords(key, scaleChoice)
 
-# Set the number of kicks and snares in the beat based on bpm and duration
+
 bpm = 120
 # Set the duration of each 1/8 beat in milliseconds based on the bpm and duration
 interval = (1/bpm * 60 * 1000) / 2
@@ -77,13 +85,9 @@ tracks = [
 totalLength = 30
 fullBeat = addTrack(list(np.zeros(totalLength)))
 
-file = open("melody_output.csv", "r")
-notesFromFile = list(csv.reader(file, delimiter=","))[0]
-file.close()
-
 fullNotes = []
 for i in range(totalLength):
-    nextNote = notesFromFile[i % len(notesFromFile)]
+    nextNote = melodyNotes[i % len(melodyNotes)]
     fullNotes.append(nextNote)
 
 fullBeat = fullBeat.overlay(addMelody(fullNotes))

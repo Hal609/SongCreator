@@ -22,9 +22,10 @@ def getChords(key, scale):
         if progression[i].islower():
             chordString = str(chords[-1])
             chords[-1] = f"{chordString[:-1]}m{chordString[-1]}"
+    print(progression)
+    for note in chords:
+        print(note)
     return chords
-    # for note in chords:
-    #     print(note)
 
-key = Note("E3")
-getChords(key, bluesKeyIntervals)
+key = Note("C3")
+getChords(key, majorKeyIntervals)
