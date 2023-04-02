@@ -23,11 +23,3 @@ def getChords(key, scale):
             chordString = str(chords[-1])
             chords[-1] = f"{chordString[:-1]}m{chordString[-1]}"
     return chords
-<<<<<<< HEAD
-=======
-    # for note in chords:
-    #     print(note)
-
-key = Note("E3")
-getChords(key, bluesKeyIntervals)
->>>>>>> parent of cf9a83e (Remove need for reading and writing to file)
