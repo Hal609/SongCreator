@@ -10,9 +10,9 @@ def hihat(length):
     track = []
     for j in range(8):
         if j % 2 == 0:
-            probHit = 0.95
+            probHit = 0.90
         else:
-            probHit = 0.75
+            probHit = 0.85
 
         if rand.random() < probHit:
             track.append(3)
@@ -24,12 +24,12 @@ def snare(length):
     track = []
     for j in range(8):
         if (j-2) % 4 == 0:
-            probHit = 0.95
+            probHit = 0.90
         else:
-            probHit = 0.05
+            probHit = 0.10
         
         if len(track) > 1:
-            probDouble = 0.1
+            probDouble = 0.2
             if track[-1] == 2 and track[-2] != 2 and rand.random() < probDouble:
                 track.append(2)
                 continue
@@ -44,12 +44,12 @@ def kick(length):
     track = []
     for j in range(8):
         if j % 4 == 0:
-            probHit = 0.95
+            probHit = 0.90
         else:
-            probHit = 0.05
+            probHit = 0.10
         
         if len(track) > 1:
-            probDouble = 0.1
+            probDouble = 0.2
             if track[-1] == 1 and track[-2] != 1 and rand.random() < probDouble:
                 track.append(1)
                 continue
