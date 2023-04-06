@@ -24,35 +24,33 @@ def addMelody(note_list):
     return audio
 
 def addChords(key, progression):
-    print(progression)
     # Create an empty AudioSegment to hold the beat
     chordsTrack = AudioSegment.empty()
 
     for i in range(len(progression)):
         progression[i] = str(progression[i])
-    newSilence = silence * 2
+    newSilence = silence * 8
 
-    # Create the beat based on the beat list
-    for i in range(len(progression)):
-        shift = notesToPitchShift(progression[i])
-        hit = pitch_shift(lead, shift)
-        hit = generate_sine_wave(Note(progression[i]).get_frequency())
-        chordsTrack += newSilence
-        currentLen = len(chordsTrack)
+    for j in range(4):
+        # Create the beat based on the beat list
+        for i in range(len(progression)):
+            shift = notesToPitchShift(progression[i])
+            hit = pitch_shift(lead, shift)
+            hit = generate_sine_wave(Note(progression[i]).get_frequency())
+            chordsTrack += newSilence
+            currentLen = len(chordsTrack)
 
-        chordsTrack = chordsTrack.overlay(hit, position=currentLen-len(newSilence))
+            chordsTrack = chordsTrack.overlay(hit, position=currentLen-len(newSilence))
 
-        shift = notesToPitchShift(str(Note(progression[i]) + 5))
-        hit = pitch_shift(lead, shift)
-        hit = generate_sine_wave((Note(progression[i]) + 5).get_frequency())
-        chordsTrack += newSilence
-        chordsTrack = chordsTrack.overlay(hit, position=currentLen-len(newSilence))
+            shift = notesToPitchShift(str(Note(progression[i]) + 5))
+            hit = pitch_shift(lead, shift)
+            hit = generate_sine_wave((Note(progression[i]) + 5).get_frequency())
+            chordsTrack = chordsTrack.overlay(hit, position=currentLen-len(newSilence))
 
-        shift = notesToPitchShift(str(Note(progression[i]) + 8))
-        hit = pitch_shift(lead, shift)
-        hit = generate_sine_wave((Note(progression[i]) + 8).get_frequency())
-        chordsTrack += newSilence
-        chordsTrack = chordsTrack.overlay(hit, position=currentLen-len(newSilence))
+            shift = notesToPitchShift(str(Note(progression[i]) + 8))
+            hit = pitch_shift(lead, shift)
+            hit = generate_sine_wave((Note(progression[i]) + 8).get_frequency())
+            chordsTrack = chordsTrack.overlay(hit, position=currentLen-len(newSilence))
 
     return chordsTrack
 
@@ -90,6 +88,8 @@ for n in range(6):
     samplePath = "/Library/Application Support/Logic/EXS Factory Samples/03 Drums & Percussion/02 Electronic Drum Kits/808 Flex Kit/"
     kick = getRandomKick()
     snare = getRandomSnare()
+    kick = AudioSegment.from_file(samplePath + "Kick_1_808Flex.aif")
+    snare = AudioSegment.from_file(samplePath + "Snare_1_808Flex.aif")
     hihat = AudioSegment.from_file(samplePath + "Hi-Hat_808Flex.aif")
     ride = AudioSegment.from_file(samplePath + "Ride_808Flex.aif")
     leadPath =  "/Library/Application Support/Logic/Alchemy Samples/Keys/Acoustic Pianos/Seaward Piano/"
