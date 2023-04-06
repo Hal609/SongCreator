@@ -1,15 +1,3 @@
 I-IV-V-V
-I-I-IV-V
-I-IV-I-V
-I-IV-V-IV
-I-vi-IV-V
-I-vi-IV-V
-I-vi-iv-V
-I-IV-vi-V
 I-V-vi-IV
-vi-IV-I-V
-I-vi-ii-V
 V-IV-I-I
-I-vi-IV-V
-I-vi-ii-V
-i-VII-VI-V

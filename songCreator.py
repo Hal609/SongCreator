@@ -7,13 +7,7 @@ import createChordProgression as chords
 import createDrumTracks as drums
 from globals import *
 from pickSamples import *
-
-def pitch_shift(sound, n_half_steps):
-    octaves = n_half_steps / 12
-    new_sample_rate = int(sound.frame_rate * (2.0 ** octaves))
-    newpitch_sound = sound._spawn(sound.raw_data, overrides={'frame_rate': new_sample_rate})
-
-    return newpitch_sound
+from pitchShift import *
 
 def addMelody(note_list):
     # Create an empty AudioSegment to hold the beat
@@ -23,12 +17,14 @@ def addMelody(note_list):
     for i in range(len(note_list)):
         shift = notesToPitchShift(note_list[i])
         hit = pitch_shift(lead, shift)
+        hit = generate_square_wave(Note(note_list[i]).get_frequency())
         audio += silence
         audio = audio.overlay(hit, position=len(audio)-len(silence))
 
     return audio
 
 def addChords(key, progression):
+    print(progression)
     # Create an empty AudioSegment to hold the beat
     chordsTrack = AudioSegment.empty()
 
@@ -40,6 +36,7 @@ def addChords(key, progression):
     for i in range(len(progression)):
         shift = notesToPitchShift(progression[i])
         hit = pitch_shift(lead, shift)
+        hit = generate_sine_wave(Note(progression[i]).get_frequency())
         chordsTrack += newSilence
         currentLen = len(chordsTrack)
 
@@ -47,11 +44,13 @@ def addChords(key, progression):
 
         shift = notesToPitchShift(str(Note(progression[i]) + 5))
         hit = pitch_shift(lead, shift)
+        hit = generate_sine_wave((Note(progression[i]) + 5).get_frequency())
         chordsTrack += newSilence
         chordsTrack = chordsTrack.overlay(hit, position=currentLen-len(newSilence))
 
         shift = notesToPitchShift(str(Note(progression[i]) + 8))
         hit = pitch_shift(lead, shift)
+        hit = generate_sine_wave((Note(progression[i]) + 8).get_frequency())
         chordsTrack += newSilence
         chordsTrack = chordsTrack.overlay(hit, position=currentLen-len(newSilence))
 
@@ -79,7 +78,7 @@ def addTrack(beat_list):
 
     return beat
 
-for n in range(50):
+for n in range(6):
     # Set the number of kicks and snares in the beat based on bpm and duration
     bpm = 120
     # Set the duration of each 1/8 beat in milliseconds based on the bpm and duration
@@ -93,12 +92,13 @@ for n in range(50):
     snare = getRandomSnare()
     hihat = AudioSegment.from_file(samplePath + "Hi-Hat_808Flex.aif")
     ride = AudioSegment.from_file(samplePath + "Ride_808Flex.aif")
-    # leadPath =  "/Library/Application Support/Logic/Alchemy Samples/Keys/Acoustic Pianos/Seaward Piano/"
-    # lead = AudioSegment.from_file(leadPath + "Seaward Piano fff C2.wav")
+    leadPath =  "/Library/Application Support/Logic/Alchemy Samples/Keys/Acoustic Pianos/Seaward Piano/"
+    lead = AudioSegment.from_file(leadPath + "Seaward Piano fff C2.wav")
     # leadPath =  "/Library/Application Support/Logic/Alchemy Samples/Keys/Electric Pianos/Synth Tines/"
     # lead = AudioSegment.from_file(leadPath + "Synth Tines 03.wav")
-    leadPath = "/Library/Application Support/Logic/Alchemy Samples/Guitars/Acoustic Guitars/Acc Guit/"
-    lead = AudioSegment.from_file(leadPath + "Acc Guit C3.wav")
+    # leadPath = "/Library/Application Support/Logic/Alchemy Samples/Guitars/Acoustic Guitars/Acc Guit/"
+    # lead = AudioSegment.from_file(leadPath + "Acc Guit C3.wav")
+
 
     totalLength = 12*8
 

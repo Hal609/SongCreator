@@ -5,7 +5,7 @@ class Note:
     def __init__(self, note: str):
         self.note = note
 
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         return str(self.note)
 
     def __add__(self, other):
