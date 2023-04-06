@@ -8,6 +8,7 @@ import createDrumTracks as drums
 from globals import *
 from pickSamples import *
 from pitchShift import *
+import generateBass as bass
 
 def addMelody(note_list):
     # Create an empty AudioSegment to hold the beat
@@ -17,7 +18,7 @@ def addMelody(note_list):
     for i in range(len(note_list)):
         shift = notesToPitchShift(note_list[i])
         hit = pitch_shift(lead, shift)
-        hit = generate_square_wave(Note(note_list[i]).get_frequency())
+        hit = generate_sine_wave(Note(note_list[i]).get_frequency())
         audio += silence
         audio = audio.overlay(hit, position=len(audio)-len(silence))
 
@@ -36,7 +37,7 @@ def addChords(key, progression):
         for i in range(len(progression)):
             shift = notesToPitchShift(progression[i])
             hit = pitch_shift(lead, shift)
-            hit = generate_sine_wave(Note(progression[i]).get_frequency())
+            hit = generate_square_wave(Note(progression[i]).get_frequency())
             chordsTrack += newSilence
             currentLen = len(chordsTrack)
 
@@ -44,12 +45,12 @@ def addChords(key, progression):
 
             shift = notesToPitchShift(str(Note(progression[i]) + 5))
             hit = pitch_shift(lead, shift)
-            hit = generate_sine_wave((Note(progression[i]) + 5).get_frequency())
+            hit = generate_square_wave((Note(progression[i]) + 5).get_frequency())
             chordsTrack = chordsTrack.overlay(hit, position=currentLen-len(newSilence))
 
             shift = notesToPitchShift(str(Note(progression[i]) + 8))
             hit = pitch_shift(lead, shift)
-            hit = generate_sine_wave((Note(progression[i]) + 8).get_frequency())
+            hit = generate_square_wave((Note(progression[i]) + 8).get_frequency())
             chordsTrack = chordsTrack.overlay(hit, position=currentLen-len(newSilence))
 
     return chordsTrack
@@ -88,8 +89,8 @@ for n in range(6):
     samplePath = "/Library/Application Support/Logic/EXS Factory Samples/03 Drums & Percussion/02 Electronic Drum Kits/808 Flex Kit/"
     kick = getRandomKick()
     snare = getRandomSnare()
-    kick = AudioSegment.from_file(samplePath + "Kick_1_808Flex.aif")
-    snare = AudioSegment.from_file(samplePath + "Snare_1_808Flex.aif")
+    # kick = AudioSegment.from_file(samplePath + "Kick_1_808Flex.aif")
+    # snare = AudioSegment.from_file(samplePath + "Snare_1_808Flex.aif")
     hihat = AudioSegment.from_file(samplePath + "Hi-Hat_808Flex.aif")
     ride = AudioSegment.from_file(samplePath + "Ride_808Flex.aif")
     leadPath =  "/Library/Application Support/Logic/Alchemy Samples/Keys/Acoustic Pianos/Seaward Piano/"
@@ -106,7 +107,9 @@ for n in range(6):
     key = Note(grtMel.randomKey() )
     scaleDict = {0: majorKeyIntervals, 1: minorKeyIntervals, 2: bluesKeyIntervals}
     scaleChoice = scaleDict[rand.randint(0, 2)]
+
     melodyNotes = grtMel.generateMelody(key, scaleChoice)
+    
     chords.getChords(key, scaleChoice)
 
     tracks = [list(np.zeros(12*8))]
@@ -115,13 +118,22 @@ for n in range(6):
 
     fullBeat = addTrack(list(np.zeros(totalLength)))
 
-    fullNotes = []
+    chordProgression = chords.getChords(key, scaleChoice)
+
+    bassNotes = bass.createBass(chordProgression)
+
+    fullMelodyNotes = []
+    fullBassNotes = []
     for i in range(totalLength):
         nextNote = melodyNotes[i % len(melodyNotes)]
-        fullNotes.append(nextNote)
+        fullMelodyNotes.append(nextNote)
+        fullBassNotes.append(bassNotes[i % len(bassNotes)])
 
-    fullBeat = fullBeat.overlay(addMelody(fullNotes))
-    fullBeat = fullBeat.overlay(addChords(key, chords.getChords(key, scaleChoice)))
+    fullBeat = fullBeat.overlay(addMelody(fullMelodyNotes))
+    fullBeat = fullBeat.overlay(addChords(key, chordProgression))
+
+    fullBeat = fullBeat.overlay(addMelody(fullBassNotes))
+    
 
     for beat in tracks:
         fullBeat = fullBeat.overlay(addTrack(beat))

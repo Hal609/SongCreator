@@ -2,7 +2,7 @@ import numpy as np
 from pydub import AudioSegment
 
 
-def generate_square_wave(frequency, duration=1500, volume=4000):
+def generate_square_wave(frequency, duration=1500, volume=1000):
     # Set the sample rate and duration
     sample_rate = 44100  # 44.1 kHz sample rate
     duration_in_seconds = duration / 1000  # Convert duration from milliseconds to seconds
@@ -18,7 +18,7 @@ def generate_square_wave(frequency, duration=1500, volume=4000):
     return note_segment
 
 
-def generate_sine_wave(frequency, duration=1500, volume=4000):
+def generate_sine_wave(frequency, duration=1500, volume=6000):
     # Set the sample rate and duration
     sample_rate = 44100  # 44.1 kHz sample rate
     duration_in_seconds = duration / 1000  # Convert duration from milliseconds to seconds

@@ -32,11 +32,12 @@ class Note:
 
     def get_key_number(self):
         global keyNumDict
-        octave = int(self.note[-1]) - 1
-        noteNum = keyNumDict[self.note[0]]
-        if self.note[1] == "#":
+        noteString = str(self.note)
+        octave = int(noteString[-1]) - 1
+        noteNum = keyNumDict[noteString[0]]
+        if noteString[1] == "#":
             noteNum += 1
-        elif self.note[1] == "b":
+        elif noteString[1] == "b":
             noteNum -= 1
         return noteNum + (octave * 12)
 
