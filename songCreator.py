@@ -78,8 +78,9 @@ def addTrack(beat_list):
     return beat
 
 for n in range(6):
-    # Set the number of kicks and snares in the beat based on bpm and duration
-    bpm = 120
+    
+    bpm = int(np.random.normal(120, 20, 1))     # 1 point with mean 120 and sd 20
+
     # Set the duration of each 1/8 beat in milliseconds based on the bpm and duration
     interval = (1/bpm * 60 * 1000) / 2
 
@@ -89,8 +90,8 @@ for n in range(6):
     samplePath = "/Library/Application Support/Logic/EXS Factory Samples/03 Drums & Percussion/02 Electronic Drum Kits/808 Flex Kit/"
     kick = getRandomKick()
     snare = getRandomSnare()
-    # kick = AudioSegment.from_file(samplePath + "Kick_1_808Flex.aif")
-    # snare = AudioSegment.from_file(samplePath + "Snare_1_808Flex.aif")
+    kick = AudioSegment.from_file(samplePath + "Kick_1_808Flex.aif")
+    snare = AudioSegment.from_file(samplePath + "Snare_1_808Flex.aif")
     hihat = AudioSegment.from_file(samplePath + "Hi-Hat_808Flex.aif")
     ride = AudioSegment.from_file(samplePath + "Ride_808Flex.aif")
     leadPath =  "/Library/Application Support/Logic/Alchemy Samples/Keys/Acoustic Pianos/Seaward Piano/"
@@ -109,7 +110,7 @@ for n in range(6):
     scaleChoice = scaleDict[rand.randint(0, 2)]
 
     melodyNotes = grtMel.generateMelody(key, scaleChoice)
-    
+
     chords.getChords(key, scaleChoice)
 
     tracks = [list(np.zeros(12*8))]
@@ -133,7 +134,6 @@ for n in range(6):
     fullBeat = fullBeat.overlay(addChords(key, chordProgression))
 
     fullBeat = fullBeat.overlay(addMelody(fullBassNotes))
-    
 
     for beat in tracks:
         fullBeat = fullBeat.overlay(addTrack(beat))
