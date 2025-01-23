@@ -1,0 +1,16 @@
+I-IV-V-V
+I-V-vi-IV
+V-IV-I-I
+
+I-I-IV-V
+I-IV-I-V
+I-IV-V-IV
+I-vi-IV-V
+I-vi-IV-V
+I-vi-iv-V
+I-IV-vi-V
+vi-IV-I-V
+I-vi-ii-V
+I-vi-IV-V
+I-vi-ii-V
+i-VII-VI-V
