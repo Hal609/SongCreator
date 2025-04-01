@@ -1,5 +1,4 @@
 import random as rand
-import numpy as np
 
 tracks = [
     [1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 2, 2, 0, 0, 2, 0],

@@ -105,8 +105,6 @@ def createSong():
 
     melodyNotes = generateMelody(key, scaleChoice)
 
-    getChords(key, scaleChoice)
-
     tracks = [list(np.zeros(12*8))]
 
     tracks += createTrack(len(tracks[0]))
