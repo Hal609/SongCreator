@@ -4,6 +4,7 @@ reverseKeyNumDict = {4: "C", 6: "D", 8: "E", 9: "F", 11: "G", 13: "A", 15: "B"}
 class Note:
     def __init__(self, note: str):
         self.note = note
+        self.set_key_number(self.get_key_number()) # Ensure note number is 1 to 88
 
     def __repr__(self) -> str:
         return str(self.note)
@@ -39,7 +40,8 @@ class Note:
             noteNum += 1
         elif noteString[1] == "b":
             noteNum -= 1
-        return noteNum + (octave * 12)
+        key = noteNum + (octave * 12)
+        return max(min(88, key), 1)
 
     def get_frequency(self):
         n = self.get_key_number()
