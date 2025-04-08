@@ -4,11 +4,9 @@ import random as rand
 from os import path
 from pydub import AudioSegment
 import pathlib
-from pretty_progress import progress_bar
 
 from .noteClass import Note
 from .globals import *
-# from pitchShift import *
 
 from .createChordProgression import getChords
 from .createDrumTracks import createTrack

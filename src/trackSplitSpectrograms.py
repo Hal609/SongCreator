@@ -4,7 +4,6 @@ import random as rand
 from os import path
 from pydub import AudioSegment
 import pathlib
-from pretty_progress import progress_bar
 
 from .noteClass import Note
 from .globals import *
@@ -91,7 +90,7 @@ def countCurrentSpectrograms():
 def createSplitTrackSpectrograms(n, keepWAVs = False):
     global kick, snare, hihat, ride
 
-    count = countCurrentSpectrograms() 
+    count = 0#countCurrentSpectrograms()
 
     for i in range(n):
         print(count)
@@ -191,7 +190,7 @@ def createSplitTrackSpectrograms(n, keepWAVs = False):
         if not os.path.exists(newPath):
             print("Creating dir at", newPath)
             os.makedirs(newPath)
-        wavToSpect(filepath, f"{newPath}/mixture.png")
+        wavToSpect(filepath, f"{newPath}/mixture.npy")
         if not keepWAVs: os.remove(filepath)
         
         for inst in used_insts:
@@ -199,5 +198,5 @@ def createSplitTrackSpectrograms(n, keepWAVs = False):
             newPath = f"{gloPath}/../splitTrackData/track{count:04}"
             if not os.path.exists(newPath):
                 os.makedirs(newPath)
-            wavToSpect(trackPaths[inst], f"{newPath}/{inst}.png")
+            wavToSpect(trackPaths[inst], f"{newPath}/{inst}.npy")
             if not keepWAVs: os.remove(trackPaths[inst])

@@ -7,7 +7,6 @@ import pathlib
 
 from .noteClass import Note
 from .globals import *
-# from pitchShift import *
 
 from .createChordProgression import getChords
 from .createDrumTracks import createTrack
