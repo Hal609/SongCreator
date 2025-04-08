@@ -22,12 +22,15 @@ def wavToSpect(wavPath, outputPath):
    device = torch.device("mps")
    waveform = waveform.to(device)
 
+   window = torch.hann_window(n_fft).to(device)
+
    # 3) Compute STFT on GPU
    stft_result = torch.stft(
       input=waveform,
       n_fft=n_fft,
       hop_length=hop_length,
       normalized=False,
+      window=window,
       return_complex=True
    )
 
@@ -46,13 +49,42 @@ def wavToSpect(wavPath, outputPath):
 
    clipped_db = np.clip(to_draw_db, db_min, db_max)
 
-   scaled = 255 * ((clipped_db - db_min) / (db_max - db_min))**0.5
+   scaled = 255 * ((clipped_db - db_min) / (db_max - db_min))
 
    scaled_uint8 = scaled.astype(np.uint8)
 
    img = Image.fromarray(scaled_uint8, mode='L')
 
    img.save(f"{outputPath}")
-   # print(f"Saved BMP image to {outputPath}")
+   print(f"Saved BMP image to {outputPath}")
 
 
+def wavToSpectNew(wavPath, outputPath):
+   n_fft = 16384 # 16384 # 8192 # 4096      # Larger window -> better frequency resolution
+   hop_length = 1024 # Step size between windows
+
+   waveform, sr = torchaudio.load(wavPath)  # waveform shape: (channels, time)
+
+   if waveform.shape[0] > 1:
+      waveform = torch.mean(waveform, dim=0, keepdim=True)
+
+   device = torch.device("mps")
+   waveform = waveform.to(device)
+
+   window = torch.hann_window(n_fft).to(device)
+   
+   stft_result = torch.stft(
+      input=waveform,
+      n_fft=n_fft,
+      hop_length=hop_length,
+      normalized=False,
+      window=window,
+      return_complex=True
+   )
+
+   magnitude = stft_result.abs()
+   magnitude_db = 20.0 * torch.log10(magnitude + 1e-7)
+
+   magnitude_db = magnitude.squeeze().cpu().numpy()  # shape: (freqs, frames)
+
+   np.save(outputPath, magnitude_db)
