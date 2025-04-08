@@ -1,7 +1,5 @@
-
 import numpy as np
 from PIL import Image
-import librosa
 import soundfile as sf
 import torch
 import torchaudio
