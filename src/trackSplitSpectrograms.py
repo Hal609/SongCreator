@@ -14,7 +14,7 @@ from .createDrumTracks import createTrack
 from .generateBass import createBass
 from .generateMelody import randomKey, generateMelody
 
-from .wavToSpect import wavToSpect
+from .wavToSpect import wavToSpectNew
 
 # Load the samples
 samplePath = "samples/drums/808/"
@@ -90,7 +90,7 @@ def countCurrentSpectrograms():
 def createSplitTrackSpectrograms(n, keepWAVs = False):
     global kick, snare, hihat, ride
 
-    count = 0#countCurrentSpectrograms()
+    count = countCurrentSpectrograms()
 
     for i in range(n):
         print(count)
@@ -130,7 +130,7 @@ def createSplitTrackSpectrograms(n, keepWAVs = False):
         
         count += 1
         
-        num_instruments = rand.randint(2, 5)
+        num_instruments = 5# rand.randint(2, 5)
         instrumentTracks = {}
         trackPaths = {}
         unused_insts = ["piano", "bass", "drums", "guitar", "synth"]
@@ -138,9 +138,9 @@ def createSplitTrackSpectrograms(n, keepWAVs = False):
         for k in range(num_instruments):
             # Step 1: Pick an instrument to create a spectrogram for
             inst = rand.choice(unused_insts)
-            instrumentTracks[inst] = addTrack(list(np.zeros(totalLength)), silence)
-            unused_insts.remove(inst)
-            used_insts.append(inst)
+            instrumentTracks[inst] = addTrack(list(np.zeros(totalLength)), silence) # Create an empty track
+            unused_insts.remove(inst) # Remove the instrument from the list
+            used_insts.append(inst) # Remove the instrument from the list
 
             # Step 2: Pick a voice for the chosen instrument
             voice = rand.choice(voices[inst])
@@ -190,7 +190,7 @@ def createSplitTrackSpectrograms(n, keepWAVs = False):
         if not os.path.exists(newPath):
             print("Creating dir at", newPath)
             os.makedirs(newPath)
-        wavToSpect(filepath, f"{newPath}/mixture.npy")
+        wavToSpectNew(filepath, f"{newPath}/mixture.npy")
         if not keepWAVs: os.remove(filepath)
         
         for inst in used_insts:
@@ -198,5 +198,5 @@ def createSplitTrackSpectrograms(n, keepWAVs = False):
             newPath = f"{gloPath}/../splitTrackData/track{count:04}"
             if not os.path.exists(newPath):
                 os.makedirs(newPath)
-            wavToSpect(trackPaths[inst], f"{newPath}/{inst}.npy")
+            wavToSpectNew(trackPaths[inst], f"{newPath}/{inst}.npy")
             if not keepWAVs: os.remove(trackPaths[inst])

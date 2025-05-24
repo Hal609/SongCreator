@@ -130,8 +130,7 @@ def createNMultiInstSpectrograms(n, keepWAVs = False):
         count += 1
         
         num_instruments = rand.randint(2, 5)
-        instrumentTracks = {}
-        trackPaths = {}
+        
         unused_insts = ["piano", "bass", "drums", "guitar", "synth"]
         used_insts = []
         for k in range(num_instruments):
@@ -180,7 +179,9 @@ def createNMultiInstSpectrograms(n, keepWAVs = False):
         wavToSpect(filepath, newPath)
         if not keepWAVs: os.remove(filepath)
 
-        # filename,piano,bass,drums,guitar,synth
+        # This section adds the labels for what the spectrogram is called
+        # and what instruments are being played - a 0 if it's not playing
+        # and a 1 if it is. 
         res = ""
         for inst in ["piano", "bass", "drums", "guitar", "synth"]:
             if inst in used_insts:
