@@ -1,1 +1,3 @@
-from .generateSongs import createSong
+from .generateSpectrograms import createNSingleInstSpectrograms
+from .generateMultiInstSpectrograms import createNMultiInstSpectrograms
+from .trackSplitSpectrograms import createSplitTrackSpectrograms

@@ -15,15 +15,15 @@ def pickProgression():
 def getChords(key, scale):
     progression = pickProgression()
     progression = progression.split("-")
-    print("Key:", key, " Scale:", scale)
-    print("Progression:", progression)
+    # print("Key:", key, " Scale:", scale)
+    # print("Progression:", progression)
     chords = []
     for i in range(0, len(progression)):
-        print(f"Progression {i}: {progression[i]}")
-        print("Numeral dict:", numeralDict[progression[i]])
-        print("scale[:numercaldict-1]", scale[:numeralDict[progression[i]] - 1])
+        # print(f"Progression {i}: {progression[i]}")
+        # print("Numeral dict:", numeralDict[progression[i]])
+        # print("scale[:numercaldict-1]", scale[:numeralDict[progression[i]] - 1])
         keyInterval = sum(scale[:numeralDict[progression[i]] - 1])
-        print("keyInterval", keyInterval)
+        # print("keyInterval", keyInterval)
         chords.append(key + keyInterval)
         if progression[i].islower():
             chordString = str(chords[-1])

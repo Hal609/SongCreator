@@ -37,9 +37,8 @@ def createMelody(key, scale):
         scalePos += noteChange
     return melody
 
-def randomKey():
+def randomKey(octaves = [2, 3, 4]):
     keys = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"]
-    octaves = [2, 3, 4, 5]
     return rand.choice(keys) + str(rand.choice(octaves))
 
 def generateMelody(key, scale):
