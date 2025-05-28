@@ -2,30 +2,17 @@
 
 A Python program that generates chord progressions, melodies and drum beats. It then uses drum samples and constructs the melody and chords to create infinite simple music segments and corresponding spectrograms for use in CNN models for deep learning.
 
-https://github.com/user-attachments/assets/ca547003-8ef9-47b0-b202-b36e6e924c00
+https://github.com/user-attachments/assets/14a7ad80-51c1-499e-a8c4-ea1a9f34359b
 
-https://github.com/user-attachments/assets/961aa4d8-d410-4c3c-a39d-f1d4d1aacc95
+https://github.com/user-attachments/assets/588cc3bc-a401-4074-99ee-9fa408fbd975
 
-https://github.com/user-attachments/assets/aae39081-c39c-439a-b7d6-7f84c8c6fb9b
+https://github.com/user-attachments/assets/2d763295-f4ab-45a1-9063-ece138637214
 
-https://github.com/user-attachments/assets/36459f88-c02a-4cbc-ae46-11cb1b26f756
+https://github.com/user-attachments/assets/30298238-2daa-4b79-8d27-ed92b3eb1e9c
 
-https://github.com/user-attachments/assets/deefa4f8-47cc-4d53-9505-836cd3938739
+https://github.com/user-attachments/assets/7149e2a4-d298-48e2-94c8-6933594d763b
 
-https://github.com/user-attachments/assets/a5ed314b-48ef-4546-bc96-6977403ba946
+https://github.com/user-attachments/assets/760222f1-30aa-4a3e-8c64-8d43d7817640
 
-https://github.com/user-attachments/assets/29797172-2a14-405b-90e3-17791030dbda
-
-
-
-
-
-
-
-
-
-
-
-
-
+https://github.com/user-attachments/assets/0bb2e9d9-6acc-4ab6-833a-eeb7ac1ba25e
 
